@@ -12,10 +12,8 @@ import jakarta.persistence.Table;
 @Entity
 @Table
 public class Movie {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
 	private Long id;
 	
 	@Column
