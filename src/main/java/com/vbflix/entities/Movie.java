@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,13 +27,15 @@ public class Movie {
 	@Column(name = "short_description")
 	private String shortDescription;
 	
-	@Column
-	private String category;
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
 	
 	public Movie() {
 	}
 
-	public Movie(Long id, String name, String longDescription, String shortDescription, String category) {
+	public Movie(Long id, String name, String longDescription, String shortDescription, Category category) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.longDescription = longDescription;
@@ -71,11 +75,11 @@ public class Movie {
 		this.shortDescription = shortDescription;
 	}
 
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
@@ -97,6 +101,6 @@ public class Movie {
 				&& Objects.equals(longDescription, other.longDescription) && Objects.equals(name, other.name)
 				&& Objects.equals(shortDescription, other.shortDescription);
 	}
-	
+
 	
 }

@@ -1,17 +1,18 @@
 package com.vbflix.dto;
 
+import com.vbflix.entities.Category;
 import com.vbflix.entities.Movie;
 
 public class MovieDTO {
-	
+
 	private Long id;
 	private String shortDescription;
-	private String category;
-	
+	private Category category;
+
 	public MovieDTO() {
 	}
 
-	public MovieDTO(Long id, String shortDescription, String category) {
+	public MovieDTO(Long id, String shortDescription, Category category) {
 		this.id = id;
 		this.shortDescription = shortDescription;
 		this.category = category;
@@ -39,13 +40,12 @@ public class MovieDTO {
 		this.shortDescription = shortDescription;
 	}
 
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
-	
+
 }
