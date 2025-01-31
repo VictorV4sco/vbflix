@@ -21,10 +21,10 @@ public class Movie {
 	@Column
 	private String name;
 	
-	@Column(name = "long_description")
+	@Column(name = "long_description", columnDefinition = "TEXT")
 	private String longDescription;
 	
-	@Column(name = "short_description")
+	@Column
 	private String shortDescription;
 	
 	@ManyToOne
@@ -35,7 +35,6 @@ public class Movie {
 	}
 
 	public Movie(Long id, String name, String longDescription, String shortDescription, Category category) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.longDescription = longDescription;
