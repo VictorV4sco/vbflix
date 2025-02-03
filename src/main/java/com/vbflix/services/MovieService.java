@@ -31,7 +31,7 @@ public class MovieService {
 	
 	public List<MovieDTO> findByTitle(String title) throws Exception {
 		try {
-			List<Movie> movies = repository.findByTitle(title);
+			List<Movie> movies = repository.findByTitleStartsWith(title);
 			if(movies.isEmpty()) {
 				throw new Exception("Título não encontrado");
 			}

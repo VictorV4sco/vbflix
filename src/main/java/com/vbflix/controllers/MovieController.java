@@ -27,13 +27,11 @@ public class MovieController {
 
 	@GetMapping(value = "/title/{title}")
 	public ResponseEntity<List<MovieDTO>> getMovieByTitle(@PathVariable String title) throws Exception {
-		List<MovieDTO> result = service.findByTitle(title);
-		return ResponseEntity.ok(result);
+		return new ResponseEntity<>(service.findByTitle(title), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/actors/{mainActor}")
 	public ResponseEntity<List<MovieDTO>> getMovieByActor(@PathVariable String mainActor) throws Exception {
-		List<MovieDTO> result = service.findVByActor(mainActor);
-		return ResponseEntity.ok(result);
+		return new ResponseEntity<>(service.findVByActor(mainActor), HttpStatus.OK);
 	}
 }

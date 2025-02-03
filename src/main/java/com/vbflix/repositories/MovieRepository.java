@@ -8,7 +8,7 @@ import com.vbflix.entities.Movie;
 
 public interface MovieRepository extends JpaRepository<Movie, Long>{
 	
-	List<Movie> findByTitle(String title);
+	List<Movie> findByTitleStartsWith(String title);
 	
 	List<Movie> findByMainActor(String mainActor);
 }
