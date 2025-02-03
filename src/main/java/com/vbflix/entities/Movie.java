@@ -15,31 +15,30 @@ public class Movie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
 	private String title;
-	
-	@Column(name = "description", columnDefinition = "TEXT")
+
+	@Column
 	private String description;
-	
+
 	@Column
 	private String category;
-	
+
 	@Column
 	private String director;
-	
+
 	@Column(name = "main_actor")
 	private String mainActor;
-	
+
 	@Column(name = "release_date")
 	private String releaseDate;
-	
+
 	public Movie() {
 	}
 
 	public Movie(Long id, String title, String description, String category, String director, String mainActor,
 			String releaseDate) {
-		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -125,5 +124,4 @@ public class Movie {
 				&& Objects.equals(title, other.title);
 	}
 
-	
 }
