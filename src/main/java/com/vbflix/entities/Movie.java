@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,29 +15,37 @@ public class Movie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column
-	private String name;
-	
-	@Column(name = "long_description", columnDefinition = "TEXT")
-	private String longDescription;
-	
+	private String title;
+
 	@Column
-	private String shortDescription;
-	
-	@ManyToOne
-	@JoinColumn(name = "category_id")
-	private Category category;
-	
+	private String description;
+
+	@Column
+	private String category;
+
+	@Column
+	private String director;
+
+	@Column(name = "main_actor")
+	private String mainActor;
+
+	@Column(name = "release_date")
+	private String releaseDate;
+
 	public Movie() {
 	}
 
-	public Movie(Long id, String name, String longDescription, String shortDescription, Category category) {
+	public Movie(Long id, String title, String description, String category, String director, String mainActor,
+			String releaseDate) {
 		this.id = id;
-		this.name = name;
-		this.longDescription = longDescription;
-		this.shortDescription = shortDescription;
+		this.title = title;
+		this.description = description;
 		this.category = category;
+		this.director = director;
+		this.mainActor = mainActor;
+		this.releaseDate = releaseDate;
 	}
 
 	public Long getId() {
@@ -50,41 +56,57 @@ public class Movie {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getLongDescription() {
-		return longDescription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setLongDescription(String longDescription) {
-		this.longDescription = longDescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public String getShortDescription() {
-		return shortDescription;
-	}
-
-	public void setShortDescription(String shortDescription) {
-		this.shortDescription = shortDescription;
-	}
-
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getMainActor() {
+		return mainActor;
+	}
+
+	public void setMainActor(String mainActor) {
+		this.mainActor = mainActor;
+	}
+
+	public String getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(String releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(category, id, longDescription, name, shortDescription);
+		return Objects.hash(category, description, director, id, mainActor, releaseDate, title);
 	}
 
 	@Override
@@ -96,10 +118,10 @@ public class Movie {
 		if (getClass() != obj.getClass())
 			return false;
 		Movie other = (Movie) obj;
-		return Objects.equals(category, other.category) && Objects.equals(id, other.id)
-				&& Objects.equals(longDescription, other.longDescription) && Objects.equals(name, other.name)
-				&& Objects.equals(shortDescription, other.shortDescription);
+		return Objects.equals(category, other.category) && Objects.equals(description, other.description)
+				&& Objects.equals(director, other.director) && Objects.equals(id, other.id)
+				&& Objects.equals(mainActor, other.mainActor) && Objects.equals(releaseDate, other.releaseDate)
+				&& Objects.equals(title, other.title);
 	}
 
-	
 }
