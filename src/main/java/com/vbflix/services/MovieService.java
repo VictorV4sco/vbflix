@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.vbflix.dto.MovieDTO;
 import com.vbflix.entities.Movie;
+import com.vbflix.exceptions.NotFoundException;
 import com.vbflix.mappers.MovieMapper;
 import com.vbflix.repositories.MovieRepository;
 
@@ -19,13 +21,10 @@ public class MovieService {
 
 	public MovieDTO findById(Long id) throws Exception {
 		try {
-			Movie movie = repository.findById(id).orElseThrow(() -> new Exception("Teste"));
-			if (movie.getId() == 1) {
-				new RuntimeException("Deu zica");
-			}
+			Movie movie = repository.findById(id).orElseThrow(() -> new NotFoundException("Id" + id + "not found"));
 			return new MovieDTO(movie.getId(), movie.getTitle(), movie.getDescription(), movie.getCategory(),
 					movie.getDirector(), movie.getMainActor(), movie.getReleaseDate());
-		} catch (Exception e) { // Erros com mesmo tratamento aqui dentro
+		} catch (NotFoundException e) { // Erros com mesmo tratamento aqui dentro
 			throw e;
 		}
 	}
@@ -34,13 +33,13 @@ public class MovieService {
 		try {
 			List<Movie> movies = repository.findByTitleStartsWith(title);
 			if (movies.isEmpty()) {
-				throw new Exception("Título não encontrado");
+				throw new NotFoundException("Title" + title + "not found");
 			}
 			return movies.stream()
 					.map(movie -> new MovieDTO(movie.getId(), movie.getTitle(), movie.getDescription(),
 							movie.getCategory(), movie.getDirector(), movie.getMainActor(), movie.getReleaseDate()))
 					.collect(Collectors.toList());
-		} catch (Exception e) {
+		} catch (NotFoundException e) {
 			throw e;
 		}
 	}
@@ -49,13 +48,13 @@ public class MovieService {
 		try {
 			List<Movie> movies = repository.findByMainActor(mainActor);
 			if (movies.isEmpty()) {
-				throw new Exception("Ator não listado");
+				throw new NotFoundException("Actor" + mainActor + "not found");
 			}
 			return movies.stream()
 					.map(movie -> new MovieDTO(movie.getId(), movie.getTitle(), movie.getDescription(),
 							movie.getCategory(), movie.getDirector(), movie.getMainActor(), movie.getReleaseDate()))
 					.collect(Collectors.toList());
-		} catch (Exception e) {
+		} catch (NotFoundException e) {
 			throw e;
 		}
 	}
@@ -64,13 +63,13 @@ public class MovieService {
 		try {
 			List<Movie> movies = repository.findAll();
 			if (movies.isEmpty()) {
-				throw new Exception("Lista está vazia");
+				throw new NotFoundException("Movies not found");
 			}
 			return movies.stream()
 					.map(movie -> new MovieDTO(movie.getId(), movie.getTitle(), movie.getDescription(),
 							movie.getCategory(), movie.getDirector(), movie.getMainActor(), movie.getReleaseDate()))
 					.collect(Collectors.toList());
-		} catch (Exception e) {
+		} catch (NotFoundException e) {
 			throw e;
 		}
 	}
@@ -106,7 +105,14 @@ public class MovieService {
 		return MovieMapper.INSTANCE.toDTO(savedMovie);	// Converte a entidade salva de volta para UsuarioDTO
 	}
 	
-	public void excludeMovieById(Long id) {
-		repository.deleteById(id);
+	public HttpStatus excludeMovieById(Long id) {
+		if(repository.existsById(id)) {
+			repository.deleteById(id);
+			return HttpStatus.NO_CONTENT;
+		} else {
+			return HttpStatus.NOT_FOUND;
+		}
+		//		repository.deleteById(id);
+		
 	}
 }
