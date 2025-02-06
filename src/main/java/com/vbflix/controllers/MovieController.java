@@ -48,6 +48,7 @@ public class MovieController {
 //		MovieDTO savedMovie = service.save(movieDTO);
 //		return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
 //	}
+	
 	@PostMapping
 	public ResponseEntity<MovieDTO> createUser(@RequestBody MovieDTO movieDTO) {
 		MovieDTO savedUser = service.saveMovie(movieDTO);
